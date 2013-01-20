@@ -16,10 +16,18 @@ public:
 	void add_department(Department _dept);
 	void add_fine(Fine _fine);
 
+	Student rand_stu() {
+		return *(student_list.front());
+	}
+
+	int get_student_size() {
+		return student_list.size();
+	}
+
 private:
-	std::list<Student> student_list;
-	std::list<Department> dept_list;
-	std::list<Fine> fine_list;
+	std::list<Student*> student_list;
+	std::list<Department*> dept_list;
+	std::list<Fine*> fine_list;
 
 };
 

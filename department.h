@@ -9,16 +9,21 @@ public:
 	
 	}
 
+	Department(const Department& _dept) {
+
+		dept_id = _dept.get_dept_id();
+		dept_name = _dept.get_dept_name();
+	}
 
 	/** * * * * * * * * * * * *
  		Data access
 	* * * * * * * * * * * * **/
 
-	std::string get_dept_name() {
+	std::string get_dept_name() const {
 		return dept_name;
 	}
 
-	int get_dept_id() {
+	int get_dept_id() const {
 		return dept_id;
 	}
 
