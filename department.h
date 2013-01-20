@@ -1,6 +1,8 @@
 #ifndef _DEPT_H
 #define _DEPT_H
 
+#include <sstream>
+
 class Department {
 
 public:
@@ -13,6 +15,10 @@ public:
 
 		dept_id = _dept.get_dept_id();
 		dept_name = _dept.get_dept_name();
+	}
+
+	std::string get_summary() {
+		return int_to_string(dept_id) + "\t" + dept_name;
 	}
 
 	/** * * * * * * * * * * * *
@@ -30,6 +36,12 @@ public:
 private:
 	std::string dept_name;
 	int dept_id;
+
+	std::string int_to_string(int num) {
+		std::ostringstream stringstream;
+		stringstream << num;
+		return stringstream.str();
+	}
 
 };
 

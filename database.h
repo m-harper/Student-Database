@@ -5,6 +5,7 @@
 #include "department.h"
 #include "fine.h"
 #include <list>
+#include <iostream>
 
 class Database {
 
@@ -20,8 +21,16 @@ public:
 		return *(student_list.front());
 	}
 
+	Department rand_dept() {
+		return *(dept_list.front());
+	}
+
 	int get_student_size() {
 		return student_list.size();
+	}
+
+	int get_dept_list_size() {
+		return dept_list.size();
 	}
 
 private:
