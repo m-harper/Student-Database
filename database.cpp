@@ -69,4 +69,25 @@ void Database::add_fine(std::string _fine) {
 	add_fine(Fine(student_id, dept_id, amount, date, fine_type));
 }
 
+void Database::process_payment(std::string _payment) {
+	std::string payment = _payment;
+	int student_id = string_to_int(get_token(payment));
+	double amount = string_to_double(get_token(payment));
+	std::string date = payment;
+
+	Student student = find_student(student_id);
+	student.pay_fine(amount);
+
+}
+
+Student Database::find_student(int id) {
+	
+	Student* student;
+	for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
+		student = *it;	
+		if (student->get_id_number() == id)
+			return *student;
+	}
+	// TODO: handle id not found
+}
 

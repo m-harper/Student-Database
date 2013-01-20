@@ -11,16 +11,17 @@ public:
 		id_number(_id), major(_major) {
 		
 		parse_name(_name);
-
+		init_balance();
 	 }
 
 	Student(const Student& _student) {
 		id_number = _student.get_id_number();
 		major = _student.get_major();
-		parse_name(_student.get_name());	
+		parse_name(_student.get_name());
+		init_balance();
 	}
 	
-	void pay_fine(int payment_amount);
+	void pay_fine(double);
 	void parse_name(std::string);
 	
 	std::string get_summary() {
@@ -71,7 +72,6 @@ private:
 	int id_number; // 9 digits
 	std::string first_name, last_name;
 	std::string major;
-	double balance;
 	double unpaid_fines;
 	double paid_fines;
 
@@ -79,6 +79,11 @@ private:
 		std::ostringstream stringstream;
 		stringstream << num;
 		return stringstream.str();
+	}
+
+	void init_balance() {
+		unpaid_fines = 0;
+		paid_fines = 0;
 	}
 
 };

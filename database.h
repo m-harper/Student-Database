@@ -22,6 +22,10 @@ public:
 	void add_department(std::string _dept);
 	void add_fine(std::string _fine);
 
+	Student find_student(int);
+
+	void process_payment(std::string);
+
 	Student rand_stu() {
 		return *(student_list.front());
 	}
