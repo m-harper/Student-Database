@@ -8,9 +8,6 @@ using namespace std;
 enum Command {S, D, F, P, PS, PD, PM, err = -1, QUIT = -2};
 
 Command parse_command(string);
-void add_student(Database&, string);
-void add_department(Database&, string);
-void add_fine(Database&, string);
 
 int main() {
 
@@ -24,13 +21,13 @@ int main() {
 			break;
 		switch (parse_command(input)) {
 		case S:
-			add_student(db, parameters);
+			db.add_student(parameters);
 			break;
 		case D:
-			add_department(db, parameters);
+			db.add_department(parameters);
 			break;
 		case F:
-			add_fine(db, parameters);
+			db.add_fine(parameters);
 			break;
 		case P:
 			break;
@@ -50,6 +47,8 @@ int main() {
 	cout << stu.get_summary() << endl;
 	Department dept = db.rand_dept();
 	cout << dept.get_summary() << endl;
+	Fine fine = db.rand_fine();
+	cout << fine.get_summary() << endl;
 	return 0;
 
 }
@@ -74,49 +73,4 @@ Command parse_command(string command) {
 	if (identifier == "Q")
 		return QUIT;
 	return err;
-}
-
-int string_to_int(string id) {
-
-	int num;
-	istringstream(id) >> num;
-	return num;
-
-}
-
-// Returns the portion of a string up to a space character.
-// That portion is dropped off of the original string.
-string get_token(string& full_string) {
-	string token = full_string.substr(0, full_string.find(' '));
-	full_string = full_string.substr(full_string.find(' ') + 1);
-	return token;
-}
-
-void add_student(Database& db, string _student) {
-	
-	string student = _student;
-
-	int student_id = string_to_int(get_token(student));
-	
-	string first_name = get_token(student);
-	string last_name = get_token(student);
-	string name = first_name + " " + last_name;
-	
-	string major = student;
-	
-	db.add_student(Student(student_id, name, major));
-
-}
-
-void add_department(Database& db, string _department) {
-
-	string department = _department;
-	int dept_id = string_to_int(get_token(department));
-	string dept_name = department; 
-
-	db.add_department(Department(dept_id, dept_name));
-}
-
-void add_fine(Database& db, string _fine) {
-
 }

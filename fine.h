@@ -13,6 +13,9 @@ public:
 
 	}
 
+	std::string get_summary() {
+		return int_to_string(student_id) + '\t' + int_to_string(dept_id) + '\t' +  double_to_string(amount)  + '\t' + date + '\t' + fine_type;
+	}
 
 	/** * * * * * * * * * * * * *
  		Data access
@@ -44,6 +47,18 @@ private:
 	double amount;
 	std::string date;
 	std::string fine_type;
+
+	std::string int_to_string(int num) {
+		std::ostringstream stringstream;
+		stringstream << num;
+		return stringstream.str();
+	}
+
+	std::string double_to_string(double num) {
+		std::ostringstream stringstream;
+		stringstream << num;
+		return stringstream.str();
+	}
 
 };
 
