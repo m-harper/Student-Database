@@ -4,6 +4,7 @@
 #include "student.h"
 #include "department.h"
 #include "fine.h"
+#include "util.h"
 #include <list>
 #include <iostream>
 #include <sstream>
@@ -28,6 +29,7 @@ public:
 	void process_payment(std::string);
 	void print_student_report(std::string);
 	void print_department_report(std::string);
+	void print_major_report(std::string);
 
 	Student* rand_stu() {
 		return student_list.front();
@@ -54,6 +56,7 @@ public:
 	}
 
 private:
+	Util util;
 	std::list<Student*> student_list;
 	std::list<Department*> dept_list;
 	std::list<Fine*> fine_list;

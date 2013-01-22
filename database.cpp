@@ -117,6 +117,21 @@ Department* Database::find_department(int _id) {
 
 }
 
+void Database::print_major_report(std::string _major) {
+	std::string major = get_token(_major);
+	std::string report = major + "\n";
+
+	Student* student;
+	// Find students with a matching major and have unpaid fines
+	for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
+		student = *it;
+		if (student->has_unpaid_fines() && student->get_major() == major)
+			report += util.int_to_string(student->get_id_number()) + '\t' + student->get_name() + '\t' + util.double_to_string(student->get_unpaid_fines()) + '\n';
+	}
+	std::cout << report << std::endl;
+
+}
+
 Student* Database::find_student(int id) {
 	
 	Student* student;
