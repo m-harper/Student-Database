@@ -13,6 +13,14 @@ public:
 
 	}
 
+	double calculate_interest(std::string _date) {
+		Util util;
+		Date today(_date);
+		Date fine_issued(date);
+		
+		int months_of_interest = fine_issued.firsts_before(today);
+	}
+
 	/** * * * * * * * * * * * * *
  		Data access
 	* * * * * * * * * * * * * **/
