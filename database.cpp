@@ -20,32 +20,13 @@ void Database::add_fine(Fine _fine) {
 	student->add_fine(fine);
 }
 
-std::string Database::get_token(std::string& full_string) {
-	std::string token = full_string.substr(0, full_string.find(' '));
-	full_string = full_string.substr(full_string.find(' ') + 1);
-	return token;
-}
-
-double Database::string_to_double(std::string dub) {
-	double converted;
-	std::istringstream(dub) >> converted;
-	return converted;
-
-}
-
-int Database::string_to_int(std::string num) {
-	int converted;
-	std::istringstream(num) >> converted;
-	return converted;
-}
-
 void Database::add_student(std::string _student) {
 	std::string student = _student;
 	
-	int id = string_to_int(get_token(student));
+	int id = util.string_to_int(util.get_token(student));
 
-	std::string first_name = get_token(student);
-	std::string last_name = get_token(student);
+	std::string first_name = util.get_token(student);
+	std::string last_name = util.get_token(student);
 	std::string name = first_name + " " + last_name;
 	std::string major = student;
 
@@ -55,7 +36,7 @@ void Database::add_student(std::string _student) {
 void Database::add_department(std::string _dept) {
 	std::string dept = _dept;
 
-	int id = string_to_int(get_token(dept));
+	int id = util.string_to_int(util.get_token(dept));
 	std::string dept_name = dept;
 
 	add_department(Department(id, dept_name));
@@ -65,10 +46,10 @@ void Database::add_department(std::string _dept) {
 void Database::add_fine(std::string _fine) {
 	std::string fine = _fine;
 
-	int student_id = string_to_int(get_token(fine));
-	int dept_id = string_to_int(get_token(fine));
-	double amount = string_to_double(get_token(fine));
-	std::string date = get_token(fine);
+	int student_id = util.string_to_int(util.get_token(fine));
+	int dept_id = util.string_to_int(util.get_token(fine));
+	double amount = util.string_to_double(util.get_token(fine));
+	std::string date = util.get_token(fine);
 	std::string fine_type = fine;
 
 	add_fine(Fine(student_id, dept_id, amount, date, fine_type));
@@ -76,8 +57,8 @@ void Database::add_fine(std::string _fine) {
 
 void Database::process_payment(std::string _payment) {
 	std::string payment = _payment;
-	int student_id = string_to_int(get_token(payment));
-	double amount = string_to_double(get_token(payment));
+	int student_id = util.string_to_int(util.get_token(payment));
+	double amount = util.string_to_double(util.get_token(payment));
 	std::string date = payment;
 
 	Student* student = find_student(student_id);
@@ -85,14 +66,14 @@ void Database::process_payment(std::string _payment) {
 }
 
 void Database::print_student_report(std::string _id) {
-	int id = string_to_int(get_token(_id));
+	int id = util.string_to_int(util.get_token(_id));
 	Student* student = find_student(id);
 	std::string report = student->get_report();
 	std::cout << report << std::endl;
 }
 
 void Database::print_department_report(std::string _dept_id) {
-	int dept_id = string_to_int(get_token(_dept_id));
+	int dept_id = util.string_to_int(util.get_token(_dept_id));
 	Department* dept = find_department(dept_id);
 	std::string report = dept->get_report() + "\n";
 	report += "Students who have fines: \n";
@@ -101,7 +82,7 @@ void Database::print_department_report(std::string _dept_id) {
 	for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
 		Student* student = *it;
 		if (student->has_fine_from_dept(dept_id))
-			report += dept->int_to_string((student->get_id_number())) + "\t" + student->get_name()+ "\n";
+			report += util.int_to_string((student->get_id_number())) + "\t" + student->get_name()+ "\n";
 	}
 	std::cout << std::endl << report << std::endl;
 }
@@ -118,7 +99,7 @@ Department* Database::find_department(int _id) {
 }
 
 void Database::print_major_report(std::string _major) {
-	std::string major = get_token(_major);
+	std::string major = util.get_token(_major);
 	std::string report = major + "\n";
 
 	Student* student;

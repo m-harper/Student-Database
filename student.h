@@ -1,11 +1,9 @@
 #ifndef _STUDENT_H
 #define _STUDENT_H
 
-#include <string>
-#include <sstream>
 #include <list>
 #include "fine.h"
-#include <iostream>
+#include "util.h"
 
 class Student {
 
@@ -32,13 +30,10 @@ public:
 	
 	void add_fine(Fine*);
 	void pay_fine(double);
+	bool has_unpaid_fines();
 	std::string get_report();
 	void parse_name(std::string);
 	int has_fine_from_dept(int);
-	
-	std::string get_summary() {
-		return int_to_string(id_number) + "\t" + first_name + " " + last_name + "\t" + major + "\t" + double_to_string(unpaid_fines);
-	}
 	
 	/** * * * * * * * * * * * *
 	  Data access
@@ -78,24 +73,13 @@ public:
 	}
 
 private:
-	int id_number; // 9 digits
+	Util util;
+	int id_number;
 	std::string first_name, last_name;
 	std::string major;
 	double unpaid_fines;
 	double paid_fines;
 	std::list<Fine*>* fines;
-
-	std::string int_to_string(int num) {
-		std::ostringstream stringstream;
-		stringstream << num;
-		return stringstream.str();
-	}
-
-	std::string double_to_string(double num) {
-		std::ostringstream stringstream;
-		stringstream << num;
-		return stringstream.str();
-	}	
 
 	void init_balance() {
 		unpaid_fines = 0;

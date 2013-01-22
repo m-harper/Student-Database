@@ -1,7 +1,7 @@
 #include "database.h"
 #include <iostream>
-#include <string>
-#include <sstream>
+//#include <string>
+//#include <sstream>
 
 using namespace std;
 
@@ -17,7 +17,7 @@ int main() {
 	while (true) {
 		getline(cin, input, '\n');
 		string parameters = input.substr(input.find(' ') + 1);
-		if (parse_command(input) == QUIT)
+		if (parse_command(input) == QUIT || input == "")
 			break;
 		switch (parse_command(input)) {
 		case S:
@@ -30,12 +30,16 @@ int main() {
 			db.add_fine(parameters);
 			break;
 		case P:
+			db.process_payment(parameters);
 			break;
 		case PS:
+			db.print_student_report(parameters);
 			break;
 		case PD:
+			db.print_department_report(parameters);
 			break;
 		case PM:
+			db.print_major_report(parameters);
 			break;
 		case err:
 			break;
@@ -43,12 +47,6 @@ int main() {
 		}
 	
 	}
-	Student stu = db.rand_stu();
-	cout << stu.get_summary() << endl;
-	Department dept = db.rand_dept();
-	cout << dept.get_summary() << endl;
-	Fine fine = db.rand_fine();
-	cout << fine.get_summary() << endl;
 	return 0;
 
 }

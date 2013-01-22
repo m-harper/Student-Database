@@ -1,7 +1,7 @@
 #ifndef _FINE_H
 #define _FINE_H
 
-#include <string>
+#include "util.h"
 
 class Fine {
 
@@ -11,10 +11,6 @@ public:
 		student_id(_student_id), dept_id(_dept_id),
 		amount(_amount), date(_date), fine_type(_fine_type) {
 
-	}
-
-	std::string get_summary() {
-		return int_to_string(student_id) + '\t' + int_to_string(dept_id) + '\t' +  double_to_string(amount)  + '\t' + date + '\t' + fine_type;
 	}
 
 	/** * * * * * * * * * * * * *
@@ -47,19 +43,6 @@ private:
 	double amount;
 	std::string date;
 	std::string fine_type;
-
-	std::string int_to_string(int num) {
-		std::ostringstream stringstream;
-		stringstream << num;
-		return stringstream.str();
-	}
-
-	std::string double_to_string(double num) {
-		std::ostringstream stringstream;
-		stringstream << num;
-		return stringstream.str();
-	}
-
 };
 
 #endif

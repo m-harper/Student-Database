@@ -10,6 +10,10 @@ void Student::add_fine(Fine* _fine) {
 	unpaid_fines += _fine->get_amount();
 }
 
+bool Student::has_unpaid_fines() {
+	return unpaid_fines > 0;
+}
+
 int Student::has_fine_from_dept(int _dept_id) {
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine = *it;
@@ -22,13 +26,13 @@ int Student::has_fine_from_dept(int _dept_id) {
 
 std::string Student::get_report() {
 	std::string report = "";
-	report += int_to_string(id_number) + "\t" + get_name() + "\n";
+	report += util.int_to_string(id_number) + "\t" + get_name() + "\n";
 	report += "Fines:\n";
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
-		report += (*it)->get_fine_type() + "\t" + double_to_string((*it)->get_amount()) + "\n";
+		report += (*it)->get_fine_type() + "\t\t" + util.double_to_string((*it)->get_amount()) + "\n";
 	}
-	report += "\nAmount paid: " + double_to_string(paid_fines) + "\n";
-	report += "Fines  owed: " + double_to_string(unpaid_fines) + "\n";
+	report += "\nAmount paid: " + util.double_to_string(paid_fines) + "\n";
+	report += "Fines  owed: " + util.double_to_string(unpaid_fines) + "\n";
 	return report;
 }
 

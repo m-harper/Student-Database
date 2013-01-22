@@ -7,12 +7,26 @@
 #include "util.h"
 #include <list>
 #include <iostream>
-#include <sstream>
 
 class Database {
 
 public:
 	Database() {
+	}
+	~Database() {
+		for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
+			Student* student = *it;
+			delete student;
+		}
+		for(std::list<Department*>::iterator it = dept_list.begin(); it != dept_list.end(); ++it) {
+			Department* dept = *it;
+			delete dept;
+		}
+		for (std::list<Fine*>::iterator it = fine_list.begin(); it != fine_list.end(); ++it) {
+			Fine* fine = *it;
+			delete fine;
+		}
+
 	}
 
 	void add_student(Student _student);
@@ -31,39 +45,11 @@ public:
 	void print_department_report(std::string);
 	void print_major_report(std::string);
 
-	Student* rand_stu() {
-		return student_list.front();
-	}
-
-	Department rand_dept() {
-		return *(dept_list.front());
-	}
-
-	Fine rand_fine() {
-		return *(fine_list.front());
-	}
-
-	int get_student_size() {
-		return student_list.size();
-	}
-
-	int get_dept_list_size() {
-		return dept_list.size();
-	}
-
-	int get_fine_list_size() {
-		return fine_list.size();
-	}
-
 private:
 	Util util;
 	std::list<Student*> student_list;
 	std::list<Department*> dept_list;
 	std::list<Fine*> fine_list;
-	
-	int string_to_int(std::string);
-	double string_to_double(std::string);
-	std::string get_token(std::string&);
 };
 
 #endif
