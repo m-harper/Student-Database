@@ -1,10 +1,35 @@
 #include "student.h"
 
 void Student::parse_name(std::string name) {
-
 	first_name = name.substr(0, name.find(" "));
 	last_name = name.substr(name.find(" ") + 1);
+}
 
+void Student::add_fine(Fine* _fine) {
+	fines->push_back(_fine);
+	unpaid_fines += _fine->get_amount();
+}
+
+int Student::has_fine_from_dept(int _dept_id) {
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		Fine* fine = *it;
+		if (fine->get_dept_id() == _dept_id)
+			return 1;
+	}
+	return 0;
+}
+
+
+std::string Student::get_report() {
+	std::string report = "";
+	report += int_to_string(id_number) + "\t" + get_name() + "\n";
+	report += "Fines:\n";
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		report += (*it)->get_fine_type() + "\t" + double_to_string((*it)->get_amount()) + "\n";
+	}
+	report += "\nAmount paid: " + double_to_string(paid_fines) + "\n";
+	report += "Fines  owed: " + double_to_string(unpaid_fines) + "\n";
+	return report;
 }
 
 void Student::pay_fine(double amount) {
@@ -13,9 +38,9 @@ void Student::pay_fine(double amount) {
 			unpaid_fines -= amount;
 			paid_fines += amount;
 		}
-		else {
-			
+		else { // Payment amount is more than accrued fines
+			paid_fines += unpaid_fines;
+			unpaid_fines = 0;
 		}
 	}
-
 }

@@ -17,6 +17,9 @@ public:
 		dept_name = _dept.get_dept_name();
 	}
 
+	std::string get_report() {
+		return int_to_string(dept_id) + "\t" + dept_name;
+	}
 	std::string get_summary() {
 		return int_to_string(dept_id) + "\t" + dept_name;
 	}
@@ -33,15 +36,15 @@ public:
 		return dept_id;
 	}
 
+	std::string int_to_string(int num) {
+		std::ostringstream ss;
+		ss << num;
+		return ss.str();
+	}
+
 private:
 	std::string dept_name;
 	int dept_id;
-
-	std::string int_to_string(int num) {
-		std::ostringstream stringstream;
-		stringstream << num;
-		return stringstream.str();
-	}
 
 };
 

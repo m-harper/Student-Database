@@ -22,12 +22,15 @@ public:
 	void add_department(std::string _dept);
 	void add_fine(std::string _fine);
 
-	Student find_student(int);
+	Student* find_student(int);
+	Department* find_department(int);
 
 	void process_payment(std::string);
+	void print_student_report(std::string);
+	void print_department_report(std::string);
 
-	Student rand_stu() {
-		return *(student_list.front());
+	Student* rand_stu() {
+		return student_list.front();
 	}
 
 	Department rand_dept() {

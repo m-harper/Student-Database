@@ -12,7 +12,12 @@ void Database::add_department(Department _dept) {
 
 void Database::add_fine(Fine _fine) {
 	Fine* fine = new Fine(_fine);
+
 	fine_list.push_back(fine);
+
+	// Apply fine to student
+	Student* student = find_student(_fine.get_student_id());
+	student->add_fine(fine);
 }
 
 std::string Database::get_token(std::string& full_string) {
@@ -75,18 +80,50 @@ void Database::process_payment(std::string _payment) {
 	double amount = string_to_double(get_token(payment));
 	std::string date = payment;
 
-	Student student = find_student(student_id);
-	student.pay_fine(amount);
+	Student* student = find_student(student_id);
+	student->pay_fine(amount);
+}
+
+void Database::print_student_report(std::string _id) {
+	int id = string_to_int(get_token(_id));
+	Student* student = find_student(id);
+	std::string report = student->get_report();
+	std::cout << report << std::endl;
+}
+
+void Database::print_department_report(std::string _dept_id) {
+	int dept_id = string_to_int(get_token(_dept_id));
+	Department* dept = find_department(dept_id);
+	std::string report = dept->get_report() + "\n";
+	report += "Students who have fines: \n";
+
+	// Loop through students searching for ones with dept fines
+	for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
+		Student* student = *it;
+		if (student->has_fine_from_dept(dept_id))
+			report += dept->int_to_string((student->get_id_number())) + "\t" + student->get_name()+ "\n";
+	}
+	std::cout << std::endl << report << std::endl;
+}
+
+Department* Database::find_department(int _id) {
+	Department* dept;
+	for (std::list<Department*>::iterator it = dept_list.begin(); it != dept_list.end(); ++it) {
+		dept = *it;
+		if (dept->get_dept_id() == _id) {
+			return dept;
+		}
+	}
 
 }
 
-Student Database::find_student(int id) {
+Student* Database::find_student(int id) {
 	
 	Student* student;
 	for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
 		student = *it;	
 		if (student->get_id_number() == id)
-			return *student;
+			return student;
 	}
 	// TODO: handle id not found
 }

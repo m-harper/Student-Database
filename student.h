@@ -3,6 +3,9 @@
 
 #include <string>
 #include <sstream>
+#include <list>
+#include "fine.h"
+#include <iostream>
 
 class Student {
 
@@ -12,6 +15,7 @@ public:
 		
 		parse_name(_name);
 		init_balance();
+		fines = new std::list<Fine*>;
 	 }
 
 	Student(const Student& _student) {
@@ -19,18 +23,23 @@ public:
 		major = _student.get_major();
 		parse_name(_student.get_name());
 		init_balance();
+		fines = new std::list<Fine*>;
+	}
+
+	~Student() {
+		delete fines;
 	}
 	
+	void add_fine(Fine*);
 	void pay_fine(double);
+	std::string get_report();
 	void parse_name(std::string);
+	int has_fine_from_dept(int);
 	
 	std::string get_summary() {
-		
-		return int_to_string(id_number) + "\t" + first_name + " " + last_name + "\t" + major;
+		return int_to_string(id_number) + "\t" + first_name + " " + last_name + "\t" + major + "\t" + double_to_string(unpaid_fines);
 	}
 	
-
-
 	/** * * * * * * * * * * * *
 	  Data access
 	* * * * * * * * * * * * **/
@@ -56,10 +65,6 @@ public:
 		return major;
 	}
 
-	double get_balance() const {
-		return balance;
-	}
-
 	double get_unpaid_fines() const {
 		return unpaid_fines;
 	}
@@ -68,18 +73,29 @@ public:
 		return paid_fines;
 	}
 
+	int get_num_fines() const {
+		return fines->size();
+	}
+
 private:
 	int id_number; // 9 digits
 	std::string first_name, last_name;
 	std::string major;
 	double unpaid_fines;
 	double paid_fines;
+	std::list<Fine*>* fines;
 
 	std::string int_to_string(int num) {
 		std::ostringstream stringstream;
 		stringstream << num;
 		return stringstream.str();
 	}
+
+	std::string double_to_string(double num) {
+		std::ostringstream stringstream;
+		stringstream << num;
+		return stringstream.str();
+	}	
 
 	void init_balance() {
 		unpaid_fines = 0;
