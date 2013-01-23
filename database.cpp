@@ -41,7 +41,7 @@ void Database::add_department(std::string _dept) {
 
 }
 
-void Database::add_fine(std::string _fine) {
+std::string Database::add_fine(std::string _fine) {
 	std::string fine = _fine;
 
 	int student_id = util.string_to_int(util.get_token(fine));
@@ -51,22 +51,25 @@ void Database::add_fine(std::string _fine) {
 	std::string fine_type = fine;
 
 	add_fine(Fine(student_id, dept_id, amount, date, fine_type));
+	return date;
 }
 
-void Database::process_payment(std::string _payment) {
+std::string Database::process_payment(std::string _payment) {
 	std::string payment = _payment;
 	int student_id = util.string_to_int(util.get_token(payment));
 	double amount = util.string_to_double(util.get_token(payment));
 	std::string date = payment;
 
 	Student* student = find_student(student_id);
-	student->pay_fine(amount);
+	student->pay_fine(amount, today);
+
+	return date;
 }
 
 void Database::print_student_report(std::string _id) {
 	int id = util.string_to_int(util.get_token(_id));
 	Student* student = find_student(id);
-	std::string report = student->get_report();
+	std::string report = student->get_report(today);
 	std::cout << report << std::endl;
 }
 
@@ -105,7 +108,7 @@ void Database::print_major_report(std::string _major) {
 	for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
 		student = *it;
 		if (student->has_unpaid_fines() && student->get_major() == major)
-			report += util.int_to_string(student->get_id_number()) + '\t' + student->get_name() + '\t' + util.double_to_string(student->get_unpaid_fines()) + '\n';
+			report += util.int_to_string(student->get_id_number()) + '\t' + student->get_name() + '\t' + util.double_to_string(student->get_unpaid_fines(today)) + '\n';
 	}
 	std::cout << report << std::endl;
 

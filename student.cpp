@@ -10,21 +10,26 @@ void Student::add_fine(Fine* _fine) {
 	//unpaid_fines += _fine->get_amount();
 }
 
-double Student::get_unpaid_fines() const {
+double Student::get_unpaid_fines(Date _date) const {
 
 	double fine_amount = 0;
 
 	// Sum the values of all the student's fines + interest
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine = *it;
-		fine_amount += fine->get_amount();
+		fine_amount += fine->get_amount(_date);
 	}
 
-	return fine_amount - paid_fines;
+	return fine_amount - balance;
 }
 
 bool Student::has_unpaid_fines() {
-	return get_unpaid_fines() > 0;
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		Fine* fine = *it;
+		if (! fine->is_paid())
+			return true;
+	}
+	return false;
 }
 
 int Student::has_fine_from_dept(int _dept_id) {
@@ -37,27 +42,39 @@ int Student::has_fine_from_dept(int _dept_id) {
 }
 
 
-std::string Student::get_report() {
+std::string Student::get_report(Date _today) {
 	std::string report = "";
 	report += util.int_to_string(id_number) + "\t" + get_name() + "\n";
 	report += "Fines:\n";
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
-		report += (*it)->get_fine_type() + "\t\t" + util.double_to_string((*it)->get_amount()) + "\n";
+		Fine* fine = *it;
+		report += fine->get_fine_type() + "\t\t" + util.double_to_string(fine->get_amount_before_interest()) + "\n";
 	}
 	report += "\nAmount paid: " + util.double_to_string(paid_fines) + "\n";
-	report += "Fines  owed: " + util.double_to_string(get_unpaid_fines()) + "\n";
+	report += "Fines  owed: " + util.double_to_string(get_unpaid_fines(_today)) + "\n";
 	return report;
 }
 
-void Student::pay_fine(double amount) {
-	if (unpaid_fines > 0) {
-		if (unpaid_fines >= amount) {
-			unpaid_fines -= amount;
-			paid_fines += amount;
+void Student::pay_fine(double _amount, Date _day) {
+	balance += _amount;
+	paid_fines += _amount;
+	
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		Fine* fine = *it;
+		if ((! fine->is_paid()) && balance >= fine->get_amount(_day)) {
+			balance -= fine->get_amount(_day);
+			fine->mark_paid();
 		}
-		else { // Payment amount is more than accrued fines
-			paid_fines += unpaid_fines;
-			unpaid_fines = 0;
-		}
+	}	
+}
+
+double Student::sum_fines(Date _day) {
+	double total = 0;
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		Fine* fine = *it;
+		if (! fine->is_paid())
+			total += fine->get_amount(_day);
 	}
+
+	return total;
 }
