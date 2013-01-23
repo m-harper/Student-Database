@@ -47,6 +47,10 @@ public:
 	void mark_paid() {
 		is_paid = true;
 	}
+	
+	bool is_paid() const {
+		return is_paid;
+	}
 
 private:
 	int student_id;
