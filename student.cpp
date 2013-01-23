@@ -18,7 +18,6 @@ double Student::get_unpaid_fines() const {
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine = *it;
 		fine_amount += fine->get_amount();
-		fine_amount += fine->calculate_interest();
 	}
 
 	return fine_amount - paid_fines;
