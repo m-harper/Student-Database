@@ -7,11 +7,25 @@ void Student::parse_name(std::string name) {
 
 void Student::add_fine(Fine* _fine) {
 	fines->push_back(_fine);
-	unpaid_fines += _fine->get_amount();
+	//unpaid_fines += _fine->get_amount();
+}
+
+double Student::get_unpaid_fines() const {
+
+	double fine_amount = 0;
+
+	// Sum the values of all the student's fines + interest
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		Fine* fine = *it;
+		fine_amount += fine->get_amount();
+		fine_amount += fine->calculate_interest();
+	}
+
+	return fine_amount - paid_fines;
 }
 
 bool Student::has_unpaid_fines() {
-	return unpaid_fines > 0;
+	return get_unpaid_fines() > 0;
 }
 
 int Student::has_fine_from_dept(int _dept_id) {
@@ -32,7 +46,7 @@ std::string Student::get_report() {
 		report += (*it)->get_fine_type() + "\t\t" + util.double_to_string((*it)->get_amount()) + "\n";
 	}
 	report += "\nAmount paid: " + util.double_to_string(paid_fines) + "\n";
-	report += "Fines  owed: " + util.double_to_string(unpaid_fines) + "\n";
+	report += "Fines  owed: " + util.double_to_string(get_unpaid_fines()) + "\n";
 	return report;
 }
 
