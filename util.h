@@ -2,6 +2,7 @@
 #define _UTIL_H
 
 #include <sstream>
+#include <ctime>
 
 class Date;
 
@@ -36,6 +37,31 @@ public:
 		std::string token = full_string.substr(0, full_string.find(' '));
 		full_string = full_string.substr(full_string.find(' ') + 1);
 		return token;
+	}
+
+	std::string get_todays_date() {
+		std::time_t date = time(NULL);
+		struct tm * dateinfo = localtime(&date);
+		std::string day = int_to_string(dateinfo->tm_mday);
+		std::string month = int_to_string(dateinfo->tm_mon + 1);
+		std::string year = int_to_string(dateinfo->tm_year + 1900);
+
+		day = pad_date(day);
+		month = pad_date(month);
+
+		std::string sep = "/";
+
+		return month + sep + day + sep + year;
+		
+	}
+
+private:
+
+	std::string pad_date(std::string _num) {
+		if (_num.length() == 1)
+			return "0" + _num;
+		else if (_num.length() == 2)
+			return _num;
 	}
 
 };
