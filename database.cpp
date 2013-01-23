@@ -13,8 +13,6 @@ void Database::add_department(Department _dept) {
 void Database::add_fine(Fine _fine) {
 	Fine* fine = new Fine(_fine);
 
-	fine_list.push_back(fine);
-
 	// Apply fine to student
 	Student* student = find_student(_fine.get_student_id());
 	student->add_fine(fine);
