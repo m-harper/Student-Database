@@ -10,7 +10,7 @@ public:
 		std::string _date, std::string _fine_type) :
 		student_id(_student_id), dept_id(_dept_id),
 		amount(_amount), date(_date), fine_type(_fine_type) {
-
+		is_paid = false;
 	}
 
 	/** * * * * * * * * * * * * *
@@ -26,7 +26,10 @@ public:
 	}
 
 	double get_amount_before_interest() const {
-		return amount;
+		if (is_paid)
+			return 0;
+		else
+			return amount;
 	}
 	
 	double get_amount() const {
@@ -40,6 +43,10 @@ public:
 	std::string get_fine_type() const {
 		return fine_type;
 	}
+	
+	void mark_paid() {
+		is_paid = true;
+	}
 
 private:
 	int student_id;
@@ -47,6 +54,7 @@ private:
 	double amount;
 	std::string date;
 	std::string fine_type;
+	bool is_paid;
 	
 	double get_interest() {
 		Util util;
