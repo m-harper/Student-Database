@@ -13,36 +13,31 @@ public:
 
 	}
 
-	double calculate_interest() {
-		Util util;
-		Date today(util.get_todays_date());
-		Date fine_issued(date);
-		
-		int months_of_interest = fine_issued.firsts_before(today);
-		return (double) months_of_interest;
-	}
-
 	/** * * * * * * * * * * * * *
  		Data access
 	* * * * * * * * * * * * * **/
 
-	int get_student_id() {
+	int get_student_id() const {
 		return student_id;
 	}
 	
-	int get_dept_id() {
+	int get_dept_id() const {
 		return dept_id;
 	}
 
-	double get_amount() {
+	double get_amount_before_interest() const {
 		return amount;
 	}
 	
-	std::string get_date() {
+	double get_amount() const {
+		return get_interest();
+	}
+	
+	std::string get_date() const {
 		return date;
 	}
 
-	std::string get_fine_type() {
+	std::string get_fine_type() const {
 		return fine_type;
 	}
 
@@ -52,6 +47,19 @@ private:
 	double amount;
 	std::string date;
 	std::string fine_type;
+	
+	double get_interest() {
+		Util util;
+		Date today(util.get_todays_date());
+		Date fine_issued(date);
+		double fine_amt = get_amount_before_interest();
+		
+		int months_of_interest = fine_issued.firsts_before(today);
+		for ( ; months_of_interest > 0; months_of_interest--) {
+			fine_amt = fine_amt * 1.01;
+		}
+		return fine_amt;
+	}
 };
 
 #endif
