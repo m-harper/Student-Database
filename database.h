@@ -22,11 +22,6 @@ public:
 			Department* dept = *it;
 			delete dept;
 		}
-		for (std::list<Fine*>::iterator it = fine_list.begin(); it != fine_list.end(); ++it) {
-			Fine* fine = *it;
-			delete fine;
-		}
-
 	}
 
 	void add_student(Student _student);
@@ -49,7 +44,6 @@ private:
 	Util util;
 	std::list<Student*> student_list;
 	std::list<Department*> dept_list;
-	std::list<Fine*> fine_list;
 };
 
 #endif
