@@ -12,12 +12,12 @@ public:
 	}
 
 	Department(const Department& _dept) {
-
 		dept_id = _dept.get_dept_id();
 		dept_name = _dept.get_dept_name();
 	}
 
-	std::string get_report() {
+	std::strng get_report() {
+		// Return the departments ID and name
 		return util.int_to_string(dept_id) + "\t" + dept_name;
 	}
 
