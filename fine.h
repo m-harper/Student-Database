@@ -2,6 +2,7 @@
 #define _FINE_H
 
 #include "util.h"
+#include <math.h>
 
 class Fine {
 
@@ -65,9 +66,16 @@ private:
 		
 		int months_of_interest = fine_issued.firsts_before(today);
 		for ( ; months_of_interest > 0; months_of_interest--) {
-			fine_amt = fine_amt * 1.01;
+			double interest = fine_amt * .01;
+			interest = round_down(interest);
+			fine_amt += interest;
 		}
 		return fine_amt;
+	}
+
+	double round_down(double _unrounded) const {
+		double rounded = floor(_unrounded * 100) / 100;
+		return rounded;
 	}
 };
 
