@@ -10,8 +10,10 @@ class Student {
 public:
 	Student(int _id, std::string _name, std::string _major) :
 		id_number(_id), major(_major) {
-		
+	
+		// Parse and set the student name	
 		parse_name(_name);
+		// Initialze the student balance and paid fine amounts
 		init_balance();
 		fines = new std::list<Fine*>;
 	 }
@@ -25,6 +27,7 @@ public:
 	}
 
 	~Student() {
+		// Iterate through the students list of fines and delete each object
 		for(std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 			Fine* fine = *it;
 			delete fine;
@@ -35,13 +38,15 @@ public:
 	void add_fine(Fine*);
 	void pay_fine(double);
 	bool has_unpaid_fines();
-	std::string get_report();
-	void parse_name(std::string);
 	int has_fine_from_dept(int);
+
+	std::string get_report();
+	
+	void parse_name(std::string);
 	void update_fine_dates(std::string);
 	
 	/** * * * * * * * * * * * *
-	  Data access
+		Data access
 	* * * * * * * * * * * * **/
 	double get_unpaid_fines() const;
 
