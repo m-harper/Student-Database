@@ -17,7 +17,8 @@ double Student::get_unpaid_fines() const {
 	// Sum the values of all the student's fines + interest
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine = *it;
-		fine_amount += fine->get_amount();
+		if ( ! fine->is_paid())
+			fine_amount += fine->get_amount();
 	}
 
 	return fine_amount - balance;

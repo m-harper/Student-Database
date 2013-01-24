@@ -3,6 +3,7 @@
 
 #include "util.h"
 #include <math.h>
+#include <iostream>
 
 class Fine {
 

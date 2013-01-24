@@ -95,7 +95,6 @@ public:
 				firsts++;
 				if (_month < 12) {
 					_month++;
-					firsts++;
 				}
 				else {
 					_month = 1;
