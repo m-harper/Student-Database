@@ -14,7 +14,16 @@ public:
 		amount(_amount), date(_date), interest_date(_date), 
 		fine_type(_fine_type) {
 
+		// Fine is initially unpaid
 		paid = false;
+	}
+
+	void mark_paid() {
+		paid = true;
+	}
+
+	void update_interest_date(std::string _date) {
+		interest_date = _date;
 	}
 
 	/** * * * * * * * * * * * * *
@@ -45,16 +54,8 @@ public:
 		return fine_type;
 	}
 	
-	void mark_paid() {
-		paid = true;
-	}
-	
 	bool is_paid() const {
 		return paid;
-	}
-
-	void update_interest_date(std::string _date) {
-		interest_date = _date;
 	}
 
 private:
@@ -71,7 +72,8 @@ private:
 		Date today(interest_date);
 		Date fine_issued(date);
 		double fine_amt = get_amount_before_interest();
-		
+	
+		// Apply interest of 1% the first of every month after the fine was received	
 		int months_of_interest = fine_issued.firsts_before(today);
 		for ( ; months_of_interest > 0; months_of_interest--) {
 			double interest = fine_amt * .01;
