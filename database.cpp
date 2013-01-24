@@ -41,7 +41,7 @@ void Database::add_department(std::string _dept) {
 
 }
 
-void Database::add_fine(std::string _fine) {
+std::string Database::add_fine(std::string _fine) {
 	std::string fine = _fine;
 
 	int student_id = util.string_to_int(util.get_token(fine));
@@ -51,9 +51,10 @@ void Database::add_fine(std::string _fine) {
 	std::string fine_type = fine;
 
 	add_fine(Fine(student_id, dept_id, amount, date, fine_type));
+	return date;
 }
 
-void Database::process_payment(std::string _payment) {
+std::string Database::process_payment(std::string _payment) {
 	std::string payment = _payment;
 	int student_id = util.string_to_int(util.get_token(payment));
 	double amount = util.string_to_double(util.get_token(payment));
@@ -61,6 +62,7 @@ void Database::process_payment(std::string _payment) {
 
 	Student* student = find_student(student_id);
 	student->pay_fine(amount);
+	return date;
 }
 
 void Database::print_student_report(std::string _id) {
@@ -122,3 +124,10 @@ Student* Database::find_student(int id) {
 	// TODO: handle id not found
 }
 
+void Database::update_date(std::string _date) {
+	// Update each students fines with current date
+	for (std::list<Student*>::iterator stu_it = student_list.begin(); stu_it != student_list.end(); ++stu_it) {
+		Student* student = *stu_it;
+		student->update_fine_dates(_date);
+	}
+}

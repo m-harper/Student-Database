@@ -10,7 +10,9 @@ public:
 	Fine(int _student_id, int _dept_id, double _amount, 
 		std::string _date, std::string _fine_type) :
 		student_id(_student_id), dept_id(_dept_id),
-		amount(_amount), date(_date), fine_type(_fine_type) {
+		amount(_amount), date(_date), interest_date(_date), 
+		fine_type(_fine_type) {
+
 		paid = false;
 	}
 
@@ -50,17 +52,22 @@ public:
 		return paid;
 	}
 
+	void update_interest_date(std::string _date) {
+		interest_date = _date;
+	}
+
 private:
 	int student_id;
 	int dept_id;
 	double amount;
 	std::string date;
+	std::string interest_date;
 	std::string fine_type;
 	bool paid;
 	
 	double get_interest() const {
 		Util util;
-		Date today(util.get_todays_date());
+		Date today(interest_date);
 		Date fine_issued(date);
 		double fine_amt = get_amount_before_interest();
 		

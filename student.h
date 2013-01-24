@@ -38,6 +38,7 @@ public:
 	std::string get_report();
 	void parse_name(std::string);
 	int has_fine_from_dept(int);
+	void update_fine_dates(std::string);
 	
 	/** * * * * * * * * * * * *
 	  Data access

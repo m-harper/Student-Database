@@ -30,15 +30,17 @@ public:
 
 	void add_student(std::string _student);
 	void add_department(std::string _dept);
-	void add_fine(std::string _fine);
+	std::string add_fine(std::string _fine);
 
 	Student* find_student(int);
 	Department* find_department(int);
 
-	void process_payment(std::string);
+	std::string process_payment(std::string);
 	void print_student_report(std::string);
 	void print_department_report(std::string);
 	void print_major_report(std::string);
+
+	void update_date(std::string);
 
 private:
 	Util util;

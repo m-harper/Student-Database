@@ -76,10 +76,35 @@ public:
 		year = get_token(date);
 	}
 
-	int firsts_before(Date _after) {
+	int firsts_before(Date _after) const {
 		int firsts = 0;
 		
-		while ( month <= _after.get_month() && year <= _after.get_year()) {
+		int _day = day;
+		int _month = month;
+		int _year = year;
+
+		while (_year <= _after.get_year()) {
+			if (_year == _after.get_year()) {
+				while (_month < _after.get_month()) {
+					firsts++;	
+					_month++;	
+				}
+				break;
+			}
+			else {
+				firsts++;
+				if (_month < 12) {
+					_month++;
+					firsts++;
+				}
+				else {
+					_month = 1;
+					_year++;
+				}
+			}
+
+		}
+		/*while ( month <= _after.get_month() && year <= _after.get_year()) {
 			day = 1;
 			if (month < 12)
 				month++;
@@ -88,7 +113,7 @@ public:
 				year++;
 			}
 			firsts++;
-		}
+		}*/
 
 		return firsts;
 	}

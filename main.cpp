@@ -12,7 +12,7 @@ Command parse_command(string);
 int main() {
 
 	Database db = Database();
-	string input;
+	string input, date;
 	
 	while (true) {
 		getline(cin, input, '\n');
@@ -27,10 +27,12 @@ int main() {
 			db.add_department(parameters);
 			break;
 		case F:
-			db.add_fine(parameters);
+			date = db.add_fine(parameters);
+			db.update_date(date);
 			break;
 		case P:
-			db.process_payment(parameters);
+			date = db.process_payment(parameters);
+			db.update_date(date);
 			break;
 		case PS:
 			db.print_student_report(parameters);

@@ -76,3 +76,10 @@ void Student::pay_fine(double _amount) {
 		}
 	}*/
 }
+
+void Student::update_fine_dates(std::string _date) {
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		Fine* fine = *it;
+		fine->update_interest_date(_date);
+	}
+}
