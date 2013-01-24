@@ -42,7 +42,8 @@ std::string Student::get_report() {
 	report += util.int_to_string(id_number) + "\t" + get_name() + "\n";
 	report += "Fines:\n";
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
-		report += (*it)->get_fine_type() + "\t\t" + util.double_to_string((*it)->get_amount()) + "\n";
+		Fine* fine = *it;
+		report += fine->get_fine_type() + "\t\t" + util.double_to_string(fine->get_amount()) + "\n";
 	}
 	report += "\nAmount paid: " + util.double_to_string(paid_fines) + "\n";
 	report += "Fines  owed: " + util.double_to_string(get_unpaid_fines()) + "\n";
