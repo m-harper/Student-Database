@@ -55,6 +55,10 @@ public:
 		
 	}
 
+	std::string get_header() {
+		return "~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+	}
+
 private:
 
 	std::string pad_date(std::string _num) {
