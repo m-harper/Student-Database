@@ -25,7 +25,7 @@ public:
 	}
 
 	~Student() {
-		for(std::list<Fine*>::iterator it = fines.begin(); it != fines.end(); ++it) {
+		for(std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 			Fine* fine = *it;
 			delete fine;
 		}

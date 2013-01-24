@@ -49,7 +49,7 @@ std::string Student::get_report() {
 	return report;
 }
 
-void Student::pay_fine(double amount) {
+void Student::pay_fine(double amount) {/*
 	if (unpaid_fines > 0) {
 		if (unpaid_fines >= amount) {
 			unpaid_fines -= amount;
@@ -59,5 +59,5 @@ void Student::pay_fine(double amount) {
 			paid_fines += unpaid_fines;
 			unpaid_fines = 0;
 		}
-	}
+	}*/
 }
