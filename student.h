@@ -65,10 +65,6 @@ public:
 		return major;
 	}
 
-	/*double get_unpaid_fines() const {
-		return unpaid_fines;
-	}*/
-
 	double get_paid_fines() const {
 		return paid_fines;
 	}
@@ -82,13 +78,13 @@ private:
 	int id_number;
 	std::string first_name, last_name;
 	std::string major;
-	//double unpaid_fines;
 	double paid_fines;
+	double balance;
 	std::list<Fine*>* fines;
 
 	void init_balance() {
-		//unpaid_fines = 0;
 		paid_fines = 0;
+		balance = 0;
 	}
 
 };

@@ -20,7 +20,7 @@ double Student::get_unpaid_fines() const {
 		fine_amount += fine->get_amount();
 	}
 
-	return fine_amount - paid_fines;
+	return fine_amount - balance;
 }
 
 bool Student::has_unpaid_fines() {
@@ -49,7 +49,21 @@ std::string Student::get_report() {
 	return report;
 }
 
-void Student::pay_fine(double amount) {/*
+void Student::pay_fine(double _amount) {
+	balance += _amount;
+	paid_fines += _amount;
+
+	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
+		Fine* fine =  *it;
+		if ( ! fine->is_paid()) {
+			if (balance >= fine->get_amount()) {
+				balance -= fine->get_amount();	
+				fine->mark_paid();
+			}	
+		}
+	}
+
+	/*
 	if (unpaid_fines > 0) {
 		if (unpaid_fines >= amount) {
 			unpaid_fines -= amount;
