@@ -14,6 +14,8 @@ public:
 	Database() {
 	}
 	~Database() {
+		// Delete all the allocated students and departments
+		// It is the job of the student to clean up its fines
 		for (std::list<Student*>::iterator it = student_list.begin(); it != student_list.end(); ++it) {
 			Student* student = *it;
 			delete student;
@@ -35,12 +37,12 @@ public:
 	Student* find_student(int);
 	Department* find_department(int);
 
-	std::string process_payment(std::string);
 	void print_student_report(std::string);
 	void print_department_report(std::string);
 	void print_major_report(std::string);
 
 	void update_date(std::string);
+	std::string process_payment(std::string);
 
 private:
 	Util util;
