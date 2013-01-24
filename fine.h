@@ -2,7 +2,6 @@
 #define _FINE_H
 
 #include "util.h"
-#include <iostream>
 
 class Fine {
 
@@ -11,7 +10,7 @@ public:
 		std::string _date, std::string _fine_type) :
 		student_id(_student_id), dept_id(_dept_id),
 		amount(_amount), date(_date), fine_type(_fine_type) {
-		paid = false;
+		is_paid = false;
 	}
 
 	/** * * * * * * * * * * * * *
@@ -27,11 +26,14 @@ public:
 	}
 
 	double get_amount_before_interest() const {
-		return amount;
+		if (is_paid)
+			return 0;
+		else
+			return amount;
 	}
 	
-	double get_amount(Date _date) const {
-		return get_interest(_date);
+	double get_amount() const {
+		return get_interest();
 	}
 	
 	std::string get_date() const {
@@ -43,11 +45,11 @@ public:
 	}
 	
 	void mark_paid() {
-		paid = true;
+		is_paid = true;
 	}
 	
 	bool is_paid() const {
-		return paid;
+		return is_paid;
 	}
 
 private:
@@ -56,13 +58,13 @@ private:
 	double amount;
 	std::string date;
 	std::string fine_type;
-	bool paid;
+	bool is_paid;
 	
-	double get_interest(Date _today) const {
+	double get_interest() {
 		Util util;
-		Date today(_today);
+		Date today(util.get_todays_date());
 		Date fine_issued(date);
-		double fine_amt = amount;
+		double fine_amt = get_amount_before_interest();
 		
 		int months_of_interest = fine_issued.firsts_before(today);
 		for ( ; months_of_interest > 0; months_of_interest--) {

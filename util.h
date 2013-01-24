@@ -69,8 +69,6 @@ private:
 class Date {
 
 public:
-	Date() { }
-
 	Date(std::string _date) {
 		std::string date = _date;
 		day = get_token(date);
