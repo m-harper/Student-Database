@@ -69,13 +69,14 @@ void Database::print_student_report(std::string _id) {
 	int id = util.string_to_int(util.get_token(_id));
 	Student* student = find_student(id);
 	std::string report = student->get_report();
-	std::cout << report << std::endl;
+	std::cout << util.get_header() << report << std::endl << util.get_header() << std::endl;
 }
 
 void Database::print_department_report(std::string _dept_id) {
 	int dept_id = util.string_to_int(util.get_token(_dept_id));
 	Department* dept = find_department(dept_id);
 	std::string report = dept->get_report() + "\n";
+	report = util.get_header() + report;
 	report += "Students who have fines: \n";
 
 	// Loop through students searching for ones with dept fines
@@ -84,7 +85,7 @@ void Database::print_department_report(std::string _dept_id) {
 		if (student->has_fine_from_dept(dept_id))
 			report += util.int_to_string((student->get_id_number())) + "\t" + student->get_name()+ "\n";
 	}
-	std::cout << std::endl << report << std::endl;
+	std::cout << std::endl << report << util.get_header() << std::endl;
 }
 
 Department* Database::find_department(int _id) {
@@ -100,7 +101,7 @@ Department* Database::find_department(int _id) {
 
 void Database::print_major_report(std::string _major) {
 	std::string major = util.get_token(_major);
-	std::string report = major + "\n";
+	std::string report = util.get_header() + major + "\n";
 
 	Student* student;
 	// Find students with a matching major and have unpaid fines
@@ -109,7 +110,7 @@ void Database::print_major_report(std::string _major) {
 		if (student->has_unpaid_fines() && student->get_major() == major)
 			report += util.int_to_string(student->get_id_number()) + '\t' + student->get_name() + '\t' + util.double_to_string(student->get_unpaid_fines()) + '\n';
 	}
-	std::cout << report << std::endl;
+	std::cout << report << util.get_header() << std::endl;
 
 }
 
