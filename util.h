@@ -10,30 +10,36 @@ class Util {
 
 public:
 	std::string int_to_string(int num) {
+		// Return an integer value as a string
 		std::stringstream ss;
 		ss << num;
 		return ss.str();	
 	}
 
 	std::string double_to_string(double num) {
+		// Return a double value as a string
 		std::stringstream ss;
 		ss << num;
 		return ss.str();
 	}
 
 	double string_to_double(std::string dub) {
+		// Return a double represented by a string to a double value
 		double converted;
 		std::istringstream(dub) >> converted;
 		return converted;
 	}
 
 	int string_to_int(std::string num) {
+		// Return an integer represented by a string to an integer value
 		int converted;
 		std::istringstream(num) >> converted;
 		return converted;
 	}
 
 	std::string get_token(std::string& full_string) {
+		// Return the portion of the string up the the first space
+		// Remove that portion from the original string
 		std::string token = full_string.substr(0, full_string.find(' '));
 		full_string = full_string.substr(full_string.find(' ') + 1);
 		return token;
@@ -56,12 +62,15 @@ public:
 	}
 
 	std::string get_header() {
+		// Return standard header for database reports
 		return "~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 	}
 
 private:
 
 	std::string pad_date(std::string _num) {
+		// Add a 0 to the beginning of the month or day value if the value
+		// is only a single digit
 		if (_num.length() == 1)
 			return "0" + _num;
 		else if (_num.length() == 2)
@@ -87,12 +96,17 @@ public:
 		int _month = month;
 		int _year = year;
 
+		// Loop while the year value is <= the end date
 		while (_year <= _after.get_year()) {
 			if (_year == _after.get_year()) {
+				// It is the same year, as the end date
+				// Increment months until the desired month
 				while (_month < _after.get_month()) {
 					firsts++;	
 					_month++;	
 				}
+				// The total months have been found
+				// Exit the loop
 				break;
 			}
 			else {
@@ -101,27 +115,18 @@ public:
 					_month++;
 				}
 				else {
+					// Its a new year
 					_month = 1;
 					_year++;
 				}
 			}
 
 		}
-		/*while ( month <= _after.get_month() && year <= _after.get_year()) {
-			day = 1;
-			if (month < 12)
-				month++;
-			else {
-				month = 1;
-				year++;
-			}
-			firsts++;
-		}*/
-
 		return firsts;
 	}
 
 	std::string to_string() {
+		// Return month/day/year
 		std::string sep = "/";
 		return util.int_to_string(month) + sep + util.int_to_string(day) + sep + util.int_to_string(year);
 	}
@@ -159,6 +164,8 @@ private:
 	Util util;
 
 	int get_token(std::string& _date) {
+		// Return the portion of a date string up to a '/'
+		// Remove that portion from the date string
 		int token = util.string_to_int(_date.substr(0, _date.find('/')));
 		_date = _date.substr(_date.find('/') + 1);
 		return token;
