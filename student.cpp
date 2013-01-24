@@ -31,7 +31,7 @@ bool Student::has_unpaid_fines() {
 int Student::has_fine_from_dept(int _dept_id) {
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine = *it;
-		if (fine->get_dept_id() == _dept_id)
+		if (fine->get_dept_id() == _dept_id && ! fine->is_paid())
 			return 1;
 	}
 	return 0;
@@ -47,7 +47,7 @@ std::string Student::get_report() {
 		report += fine->get_fine_type() + "\t\t" + util.double_to_string(fine->get_amount_before_interest()) + "\n";
 	}
 	report += "\nAmount paid: " + util.double_to_string(paid_fines) + "\n";
-	report += "Fines  owed: " + util.double_to_string(get_unpaid_fines()) + "\n";
+	report += "Fines  owed: " + util.double_to_string(get_unpaid_fines());
 	return report;
 }
 
