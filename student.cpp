@@ -7,7 +7,6 @@ void Student::parse_name(std::string name) {
 
 void Student::add_fine(Fine* _fine) {
 	fines->push_back(_fine);
-	//unpaid_fines += _fine->get_amount();
 }
 
 double Student::get_unpaid_fines() const {
@@ -21,6 +20,7 @@ double Student::get_unpaid_fines() const {
 			fine_amount += fine->get_amount();
 	}
 
+	// Return the total amount of the students unpaid fines less the students current balance
 	return fine_amount - balance;
 }
 
@@ -28,33 +28,41 @@ bool Student::has_unpaid_fines() {
 	return get_unpaid_fines() > 0;
 }
 
-int Student::has_fine_from_dept(int _dept_id) {
+bool Student::has_fine_from_dept(int _dept_id) {
+	// Return true if the student has a fine from dept_id that is unpaid
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine = *it;
 		if (fine->get_dept_id() == _dept_id && ! fine->is_paid())
-			return 1;
+			return true;
 	}
-	return 0;
+	return false;
 }
 
 
 std::string Student::get_report() {
+	// Return the students ID and name, along with any fines or fees the student has incurred
+	
 	std::string report = "";
 	report += util.int_to_string(id_number) + "\t" + get_name() + "\n";
+
+	// Append any fines the student has received
 	report += "Fines:\n";
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine = *it;
 		report += fine->get_fine_type() + "\t\t" + util.double_to_string(fine->get_amount_before_interest()) + "\n";
 	}
+	// Append account totals
 	report += "\nAmount paid: " + util.double_to_string(paid_fines) + "\n";
 	report += "Fines  owed: " + util.double_to_string(get_unpaid_fines());
 	return report;
 }
 
 void Student::pay_fine(double _amount) {
+	// Increase the balance and total paid fines
 	balance += _amount;
 	paid_fines += _amount;
 
+	// Iterate through fines, paying off the first encountered fine that can be afforded
 	for (std::list<Fine*>::iterator it = fines->begin(); it != fines->end(); ++it) {
 		Fine* fine =  *it;
 		if ( ! fine->is_paid()) {
@@ -64,18 +72,6 @@ void Student::pay_fine(double _amount) {
 			}	
 		}
 	}
-
-	/*
-	if (unpaid_fines > 0) {
-		if (unpaid_fines >= amount) {
-			unpaid_fines -= amount;
-			paid_fines += amount;
-		}
-		else { // Payment amount is more than accrued fines
-			paid_fines += unpaid_fines;
-			unpaid_fines = 0;
-		}
-	}*/
 }
 
 void Student::update_fine_dates(std::string _date) {
