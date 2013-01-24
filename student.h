@@ -38,7 +38,7 @@ public:
 	void add_fine(Fine*);
 	void pay_fine(double);
 	bool has_unpaid_fines();
-	int has_fine_from_dept(int);
+	bool has_fine_from_dept(int);
 
 	std::string get_report();
 	
