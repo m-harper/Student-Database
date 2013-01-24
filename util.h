@@ -71,8 +71,8 @@ class Date {
 public:
 	Date(std::string _date) {
 		std::string date = _date;
-		day = get_token(date);
 		month = get_token(date);
+		day = get_token(date);
 		year = get_token(date);
 	}
 
@@ -93,6 +93,10 @@ public:
 		return firsts;
 	}
 
+	std::string to_string() {
+		std::string sep = "/";
+		return util.int_to_string(month) + sep + util.int_to_string(day) + sep + util.int_to_string(year);
+	}
 
 	/** * * * * * * * * * * * * 
  		Data Access
