@@ -89,12 +89,10 @@ void parse_input(string _line, Database* db) {
 		db->add_department(line);
 		break;
 	case F:
-		date = db->add_fine(line);
-		db->update_date(date);
+		db->add_fine(line);
 		break;
 	case P:
-		date = db->process_payment(line);
-		db->update_date(date);
+		db->process_payment(line);
 		break;
 	case PS:
 		db->print_student_report(line);

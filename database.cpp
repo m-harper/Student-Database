@@ -45,7 +45,7 @@ void Database::add_department(std::string _dept) {
 
 }
 
-std::string Database::add_fine(std::string _fine) {
+void Database::add_fine(std::string _fine) {
 	std::string fine = _fine;
 
 	// Parse input in the form "student_id department_id fine_amount date fine_type"
@@ -58,11 +58,10 @@ std::string Database::add_fine(std::string _fine) {
 	// Add a fine object to the database
 	add_fine(Fine(student_id, dept_id, amount, date, fine_type));
 
-	// Return the parsed date so the database can update other fines
-	return date;
+	update_date(date);
 }
 
-std::string Database::process_payment(std::string _payment) {
+void Database::process_payment(std::string _payment) {
 	std::string payment = _payment;
 
 	// Parse input in the form "student_id payment_amount date"
@@ -74,8 +73,7 @@ std::string Database::process_payment(std::string _payment) {
 	Student* student = find_student(student_id);
 	student->pay_fine(amount);
 
-	// Return the parsed date so the database can update other fines
-	return date;
+	update_date(date);
 }
 
 void Database::print_student_report(std::string _id) {

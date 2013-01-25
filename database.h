@@ -32,7 +32,7 @@ public:
 
 	void add_student(std::string _student);
 	void add_department(std::string _dept);
-	std::string add_fine(std::string _fine);
+	void add_fine(std::string _fine);
 
 	Student* find_student(int);
 	Department* find_department(int);
@@ -42,7 +42,7 @@ public:
 	void print_major_report(std::string);
 
 	void update_date(std::string);
-	std::string process_payment(std::string);
+	void process_payment(std::string);
 
 private:
 	Util util;
